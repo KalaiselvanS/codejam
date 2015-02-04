@@ -1,0 +1,31 @@
+<project name="galaxy.merchant.guide" default="run" basedir="./">
+
+	<property name="target" value="${basedir}/target" />
+	<property name="src" value="${basedir}/src" />
+	<property name="scanners" value="${src}/main/java/com/mycom/galmerguid/scanners" />
+	<property name="flex" value="${src}/main/resources/scanners/GalMerGuid.flex" />
+	<property name="inputdir" value="${basedir}/input" />
+
+	<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" classpath="${basedir}/lib/JFlex.jar" />
+
+	<target name="run" depends="compile">
+		<java classname="com.mycom.galmerguid.TestApp" classpath="${target}">
+			<arg line="${inputdir}/test0.inp" />
+		</java>
+	</target>
+
+	<target name="compile" depends="jflex">
+		<javac srcdir="${src}/main/java" destdir="${target}" />
+	</target>
+
+	<target name="jflex" depends="clean">
+		<jflex file="${flex}" destdir="${src}/main/java" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${target}" />
+		<delete dir="${scanners}" />
+		<mkdir dir="${target}" />
+	</target>
+
+</project>
