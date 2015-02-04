@@ -36,12 +36,7 @@ public class Executer implements Runnable {
 			System.out.println("====> The output is below !!! <====\n");
 			List<QuestionStatement> allQuestions = Session.getAllQuestions();
 			for (QuestionStatement questionStatement : allQuestions) {
-//				int res = questionStatement.getResponseCode();
-//				if (res != 1) {
 				System.out.println(questionStatement.getResponse());
-//				} else {
-//					System.out.println("I have no idea what you are talking about");
-//				}
 			}
 			System.out.println("====> Thanks!!! <====\n");
 		} catch (java.io.FileNotFoundException e) {

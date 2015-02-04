@@ -96,12 +96,4 @@ public class Earning {
 		throw new RuntimeException(String.format(
 				"%s does not meet the relation with %s", root.name, otherEarning.name));
 	}
-//	public double getOtherEarningValue(Earning lhsEarning) {
-//		Double otherVal = comparableEarnings.get(lhsEarning);
-//		if (otherVal != null) {
-//			return otherVal;
-//		} else {
-//			return 1;
-//		}
-//	}
 }
