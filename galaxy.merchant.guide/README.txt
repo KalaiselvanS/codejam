@@ -7,6 +7,9 @@ To Run This:
   -> And execute the below command to see the output for a file test0.inp
      >ant run
 
+Note: If you want edit the GalMerGuid.flex file and see the reflection in code then, You can download jflex jar from 
+http://central.maven.org/maven2/de/jflex/jflex/1.4.3/jflex-1.4.3.jar and put in lib dir and uncomment the lines in build.xml
+
   Problem Statement
 =====================
 
