@@ -5,9 +5,12 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://www.springframework.org/schema/util
 http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
-	<bean id="ConnectionBean" class="com.mycom.spring.factorybean.ConnectionFactory">
+	<bean id="connectionBean" class="com.mycom.spring.factorybean.ConnectionFactory">
 		<property name="singleton" value="true" />
 		<property name="lifeInMillis" value="1000" />
+	</bean>
+	<bean id="connectionUtil" class="com.mycom.spring.factorybean.ConnectionUtil" >
+		<property name="connection" ref="connectionBean" />
 	</bean>
 
 </beans>

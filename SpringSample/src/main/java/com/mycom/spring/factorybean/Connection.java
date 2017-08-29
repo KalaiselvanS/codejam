@@ -5,8 +5,11 @@ public class Connection {
 	private String connectionString;
 	private int lifeInMillis;
 
+	public Connection() {
+	}
+
 	public Connection(int lifeInMillis) {
-		this.connectionString="ESTABLISHED";
+		this.connectionString = "ESTABLISHED";
 		thread.start();
 		this.lifeInMillis = lifeInMillis;
 	}
@@ -17,13 +20,17 @@ public class Connection {
 
 	@Override
 	public String toString() {
-		return this.hashCode()+": connection is [" + connectionString+ "]";
+		return this.hashCode() + ": connection is [" + connectionString + "]";
 	}
 
-	Thread thread = new Thread(){@Override public void run() {
-		try {
-			sleep(lifeInMillis);
-		} catch (InterruptedException e) {}
-		Connection.this.connectionString = "NOT ESTABLISHED";
-	}};
+	Thread thread = new Thread() {
+		@Override
+		public void run() {
+			try {
+				sleep(lifeInMillis);
+			} catch (InterruptedException e) {
+			}
+			Connection.this.connectionString = "NOT ESTABLISHED";
+		}
+	};
 }
