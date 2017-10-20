@@ -1,0 +1,37 @@
+<project name="java-agent" default="run" basedir="./">
+
+	<property name="agnet.src" value="${basedir}/agent/src" />
+	<property name="agent.target" value="${basedir}/agent/target/classes" />
+	<property name="agent.jar" value="${basedir}/agent/target/patching.jar" />
+	<property name="agnet-test.src" value="${basedir}/agent-test/src" />
+	<property name="agent-test.target" value="${basedir}/agent-test/target/classes" />
+
+	<target name="run" depends="compile">
+		<java classname="com.mycom.sample.agent.Server" 
+			classpath="${agent-test.target}" fork="true">
+			<jvmarg value="-Dpatch.classpath=file:///${agent.target}"/>
+			<jvmarg value="-javaagent:${agent.jar}"/>
+			<classpath>
+				<filelist>
+					<file name="${agent.jar}"/>
+				</filelist>
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="compile" depends="clean">
+		<mkdir dir="${agent.target}" />
+		<mkdir dir="${agent-test.target}" />
+		<javac srcdir="${agnet.src}/" destdir="${agent.target}" includeantruntime="false"/>
+		<javac srcdir="${agnet-test.src}/" destdir="${agent-test.target}" includeantruntime="false"/>
+		<jar destfile="${agent.jar}" manifest="${agnet.src}/META-INF/MANIFEST.MF">
+			<fileset dir="${agent.target}"/>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete dir="${agent-test.target}" />
+		<delete dir="${agent.target}" />
+	</target>
+
+</project>
