@@ -8,7 +8,7 @@ To Run This:
      >ant run
 
 Note: If you want edit the GalMerGuid.flex file and see the reflection in code then, You can download jflex jar from 
-http://central.maven.org/maven2/de/jflex/jflex/1.4.3/jflex-1.4.3.jar and put in lib dir and uncomment the lines in build.xml
+https://mvnrepository.com/artifact/de.jflex/jflex/1.4.3 and put in lib dir and uncomment the lines in build.xml
 
   Problem Statement
 =====================
