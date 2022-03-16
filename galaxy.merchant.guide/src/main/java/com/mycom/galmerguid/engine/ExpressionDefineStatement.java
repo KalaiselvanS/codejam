@@ -22,9 +22,9 @@ public class ExpressionDefineStatement implements Statement {
 				throw new SyntaxError(String.format("Operand stack size mismatch error %d", stack.size()));
 			}
 
-			String rhsEarningStr = stack.pop();
-			Earning rhsEarning = Session.getEarning(rhsEarningStr);
-			if (rhsEarning == null) {rhsEarning = new Earning(rhsEarningStr);}
+			String rhsExchangeStr = stack.pop();
+			Exchange rhsExchange = Session.getExchange(rhsExchangeStr);
+			if (rhsExchange == null) {rhsExchange = new Exchange(rhsExchangeStr);}
 
 			int rhsNumber = 1;
 			List<String> numList = new ArrayList<String>();
@@ -37,22 +37,22 @@ public class ExpressionDefineStatement implements Statement {
 
 			stack.pop();// removes the opperator
 
-			String lhsEarningStr = stack.pop();
-			Earning lhsEarning = Session.getEarning(lhsEarningStr);
-			if (lhsEarning == null) {lhsEarning = new Earning(lhsEarningStr);}
+			String lhsExchangeStr = stack.pop();
+			Exchange lhsExchange = Session.getExchange(lhsExchangeStr);
+			if (lhsExchange == null) {lhsExchange = new Exchange(lhsExchangeStr);}
 
 			int lhsNumber = 1;
 			if (stack.size() > 0) {
 				lhsNumber = GalaxyCommanUtil.parseNumber(stack);
 			}
 
-			lhsEarning.addComparableEarning(rhsEarning, lhsNumber, rhsNumber);
-			rhsEarning.addComparableEarning(lhsEarning, rhsNumber, lhsNumber);
+			lhsExchange.addComparableExchange(rhsExchange, lhsNumber, rhsNumber);
+			rhsExchange.addComparableExchange(lhsExchange, rhsNumber, lhsNumber);
 
-			Session.addEarning(lhsEarning);
-			Session.addEarning(rhsEarning);
+			Session.addExchange(lhsExchange);
+			Session.addExchange(rhsExchange);
 
-//			System.out.println(Session.context().allEarnings);
+//			System.out.println(Session.context().allExchanges);
 		}catch (java.lang.IllegalArgumentException e) {
 			throw new IllegalArgumentException(String.format("[%s is not a valid value symbal]",""));
 		}

@@ -6,17 +6,16 @@
 	<property name="flex" value="${src}/main/resources/scanners/GalMerGuid.flex" />
 	<property name="inputdir" value="${basedir}/input" />
 
-	<!--You can download it from http://mvnrepository.com/artifact/de.jflex/jflex/1.4.3
-	 http://central.maven.org/maven2/de/jflex/jflex/1.4.3/jflex-1.4.3.jar
-	<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" classpath="${basedir}/lib/JFlex.jar" />
-    -->
+	<!--You can download it from https://mvnrepository.com/artifact/de.jflex/jflex/1.4.3-->
+	<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" classpath="${basedir}/lib/jflex-1.4.3.jar" />
+    
 	<target name="run" depends="compile">
 		<java classname="com.mycom.galmerguid.TestApp" classpath="${target}">
 			<arg line="${inputdir}/test0.inp" />
 		</java>
 	</target>
 
-	<target name="compile"><!-- depends="jflex">-->
+	<target name="compile" depends="jflex">
 		<mkdir dir="${target}" />
 		<javac srcdir="${src}/main/java" destdir="${target}" />
 	</target>

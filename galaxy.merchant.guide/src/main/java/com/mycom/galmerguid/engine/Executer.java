@@ -26,9 +26,7 @@ public class Executer implements Runnable {
 	public void run() {
 		try {
 			System.out.format("====> Interpreter starts for the programe in the file %s !!! <====\n\n", fileName);
-			GalMerGuidScanner scanner = new GalMerGuidScanner(
-					new java.io.FileReader(fileName));
-			scanner = new GalMerGuidScanner(new java.io.FileReader(fileName));
+			GalMerGuidScanner scanner = new GalMerGuidScanner(new java.io.FileReader(fileName));
 			while (!scanner.getZzAtEOF()) {
 				int i = scanner.yylex();
 			}

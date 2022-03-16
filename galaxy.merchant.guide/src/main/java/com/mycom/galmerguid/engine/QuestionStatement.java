@@ -26,9 +26,9 @@ public class QuestionStatement implements Statement {
 			if (stack.size() < 3 || !GalaxyCommanUtil.stackSearchSymbal(stack, "is")) {
 				return resultCode = -1;
 			}
-			String rhsEarningStr = null;
-			if (Session.hasEarning(stack.peek())) {
-				rhsEarningStr = stack.pop();
+			String rhsExchangeStr = null;
+			if (Session.hasExchange(stack.peek())) {
+				rhsExchangeStr = stack.pop();
 			}
 
 			int rhsNumber = 1;
@@ -42,31 +42,31 @@ public class QuestionStatement implements Statement {
 
 			stack.pop();// removes the opperator
 
-			String lhsEarningStr = null;
-			if (Session.hasEarning(stack.peek())) {
-				lhsEarningStr = stack.pop();
+			String lhsExchangeStr = null;
+			if (Session.hasExchange(stack.peek())) {
+				lhsExchangeStr = stack.pop();
 			}
 
 			double result;
-			Earning rhsEarning = Session.getEarning(rhsEarningStr);
-			Earning lhsEarning = Session.getEarning(lhsEarningStr);
-			if (rhsEarning != null) {
-//				result = (int)Math.round(rhsNumber * rhsEarning.getOtherEarningValue(lhsEarning));
-				result = rhsNumber * rhsEarning.getOtherEarningValue(lhsEarning);
+			Exchange rhsExchange = Session.getExchange(rhsExchangeStr);
+			Exchange lhsExchange = Session.getExchange(lhsExchangeStr);
+			if (rhsExchange != null) {
+//				result = (int)Math.round(rhsNumber * rhsExchange.getOtherExchangeValue(lhsExchange));
+				result = rhsNumber * rhsExchange.getOtherExchangeValue(lhsExchange);
 			} else {
 				result = rhsNumber;
 			}
 
 			resultBuilder.addAll(numList);
-			if (rhsEarning != null) {
-				resultBuilder.add(rhsEarning.getName());
+			if (rhsExchange != null) {
+				resultBuilder.add(rhsExchange.getName());
 			}
 			resultBuilder.add("is");
 			resultBuilder.add(String.valueOf(result));
-			if (lhsEarning != null) {
-				resultBuilder.add(lhsEarning.getName());
-			} else if (rhsEarning != null) {
-				resultBuilder.add(rhsEarning.getName());
+			if (lhsExchange != null) {
+				resultBuilder.add(lhsExchange.getName());
+			} else if (rhsExchange != null) {
+				resultBuilder.add(rhsExchange.getName());
 			}
 			resultCode = 1;
 
@@ -92,6 +92,5 @@ public class QuestionStatement implements Statement {
 		}
 		return response.toString();
 	}
-
 
 }
