@@ -25,7 +25,7 @@ Output:
  *
  */
 public class SortWordsMultiSortingByComparatorChain {
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		String[] words = new String[] { "a", "a", "aa", "b", "a", "bb", "bbc", "ba", "ab", "b", "b", "aa", "am", "am" };
 
 		WordsCounter counter = new WordsCounter(words);
@@ -34,11 +34,33 @@ public class SortWordsMultiSortingByComparatorChain {
 				+ "\nIf count is same then sort the words with same count in alphabetical order.");
 		counter.ascending().sortCount().desending().sortWords().process();
 	}
+	
+	public static void main(String[] args) {
+		String[] words = new String[] { "a", "a", "aa", "b", "a", "bb", "bbc", "ba", "ab", "b", "b", "aa", "am", "am" };
+
+		WordsCounter counter = new WordsCounter(words);
+
+		System.out.println("Find word count and then sorting the words as per their count."
+				+ "\nIf count is same then sort the words with same count in alphabetical order.");
+	
+		List<Word> wordList = new ArrayList<>(counter.wordsMap.values());
+		System.out.println(wordList);
+		Collections.sort(wordList, new Comparator<Word>() {
+			public int compare(Word o1, Word o2) {
+				int i = o2.count.compareTo(o1.count);
+				if (i == 0) {
+					i = o1.word.compareTo(o2.word);
+				}
+				return i;
+			}
+		});
+		System.out.println(wordList);
+	}
 }
 
 class WordsCounter {
 
-	private HashMap<String, Word> wordsMap = new HashMap<>();
+	HashMap<String, Word> wordsMap = new HashMap<>();
 	private Comparator associateComparator;
 	private ComparatorChain comparatorChain;
 	private static final Comparator<Comparable> ASCENDING_ORDER =  (Comparable front, Comparable back) -> front.compareTo(back);
@@ -92,51 +114,51 @@ class WordsCounter {
 		comparatorChain.addLeaf(c);
 		return this;
 	}
+}
 
-	public static class ComparatorChain<T> implements Comparator<T> {
-		private ComparatorChain<T> next;
-		private Comparator<T> comparator;
+class ComparatorChain<T> implements Comparator<T> {
+	private ComparatorChain<T> next;
+	private Comparator<T> comparator;
 
-		public ComparatorChain(Comparator<T> comparator) {
-			this.comparator = comparator;
-		}
+	public ComparatorChain(Comparator<T> comparator) {
+		this.comparator = comparator;
+	}
 
-		public void addLeaf(ComparatorChain<T> next) {
-			if (this.next != null) {
-				this.next.addLeaf(next);
-			} else {
-				this.next = next;
-			}
-		}
-
-		public int compare(T front, T back) {
-			int rs = 0;
-			if (comparator != null) {
-				rs = comparator.compare(front, back);
-			}
-			if (rs == 0 && next != null) {
-				rs = next.compare(front, back);
-			}
-			return rs;
+	public void addLeaf(ComparatorChain<T> next) {
+		if (this.next != null) {
+			this.next.addLeaf(next);
+		} else {
+			this.next = next;
 		}
 	}
 
-	public static class Word {
-		private String word;
-		private Integer count;
-
-		public Word(String word) {
-			this.word = word;
-			count = 0;
+	public int compare(T front, T back) {
+		int rs = 0;
+		if (comparator != null) {
+			rs = comparator.compare(front, back);
 		}
-
-		public void increase() {
-			count++;
+		if (rs == 0 && next != null) {
+			rs = next.compare(front, back);
 		}
+		return rs;
+	}
+}
 
-		@Override
-		public String toString() {
-			return String.format("\n\t%s \t: %s\t", word, count);
-		}
+class Word {
+	public String word;
+	public Integer count;
+
+	public Word(String word) {
+		this.word = word;
+		count = 0;
+	}
+
+	public void increase() {
+		count++;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("\n\t%s \t: %s\t", word, count);
 	}
 }
