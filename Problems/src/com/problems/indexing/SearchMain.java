@@ -97,33 +97,33 @@ class MyUUID {
 
 class Shard {
 
-	private CharNode rootCharNode = null;
+	private CharKey rootCharNode = null;
 
 	public Shard() {
-		rootCharNode = new CharNode(null);
+		rootCharNode = new CharKey(null);
 	}
 	
 	public void indexInRootNode (String word, long l) {
 		word = word.toLowerCase();
-		CharNode leafCharNode = rootCharNode.searchOrAddWordToCharsStructure(0, word.toCharArray());
+		CharKey leafCharNode = rootCharNode.searchOrAddWordToCharsStructure(0, word.toCharArray());
 		leafCharNode.addPresenceInDocIndices(l);
 	}
 
 	public  Set<Long> searchByWord(String word) {
 		word = word.toLowerCase();
-		CharNode leafCharNode = rootCharNode.searchOrAddWordToCharsStructure(0, word.toCharArray());
+		CharKey leafCharNode = rootCharNode.searchOrAddWordToCharsStructure(0, word.toCharArray());
 		Set<Long> idList = leafCharNode.getRowDocumentIDs();
 		return idList;
 	}
 }
 
-class CharNode {
+class CharKey {
 	
 	Character thisChar;
-	List<CharNode> crossCharNodes = new LinkedList<>();
+	List<CharKey> crossCharNodes = new LinkedList<>();
 	private Set<Long> documentInices = new HashSet<>();
 	
-	public CharNode(Character thisChar) {
+	public CharKey(Character thisChar) {
 		super();
 		this.thisChar = thisChar;
 	}
@@ -141,7 +141,7 @@ class CharNode {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CharNode other = (CharNode) obj;
+		CharKey other = (CharKey) obj;
 		return Objects.equals(thisChar, other.thisChar);
 	}
 
@@ -150,16 +150,16 @@ class CharNode {
 	 * @param word
 	 * @return leaf node
 	 */
-	public CharNode searchOrAddWordToCharsStructure(int charInd, char[] cWord) {
-		CharNode charNode = this.searchOrAdd(new CharNode(cWord[charInd]));
+	public CharKey searchOrAddWordToCharsStructure(int charInd, char[] cWord) {
+		CharKey charNode = this.searchOrAdd(new CharKey(cWord[charInd]));
 		if (cWord.length == ++charInd) {
 			return charNode;
 		}
 		return searchOrAddWordToCharsStructure(charInd, cWord);
 	}
 
-	private CharNode searchOrAdd(CharNode leafCharNode) {
-		for (CharNode elemNode : crossCharNodes) {
+	private CharKey searchOrAdd(CharKey leafCharNode) {
+		for (CharKey elemNode : crossCharNodes) {
 			if (leafCharNode.equals(elemNode)) {
 				return elemNode;
 			}
