@@ -10,7 +10,7 @@ public class SearchMain {
 		Shard shard = new Shard();
 		DocumentRepo repo = new DocumentRepo();
 		DocumentCompositeVisiter docCompositeVisiter = new DocumentCompositeVisiter(shard, repo);
-		Path path = Path.of("ecom_data");
+		Path path = Path.of("src/com/problems/index_search/ecom_data");
 		docCompositeVisiter.visitForIndexing(path);
 //		print(shard.rootCharNode, "");
 		System.out.println(MyUUID.getUUID());
